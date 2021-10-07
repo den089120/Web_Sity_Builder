@@ -18,18 +18,30 @@
                             <router-link :to="{ name: 'PhotoJob' }" class="nav-link">PhotoJob</router-link>
                         </li>
                         <li class="nav-item dropdown">
-                            <div @click="addClass" class="nav-link dropdown-toggle" style="cursor:pointer">
+                            <div @click="addClass" @mouseover="addClass" class="nav-link dropdown-toggle" style="cursor:pointer">
                                 Admin tools
                             </div>
-                            <ul class="my_dropdown" :class="{ open: isClass }" aria-labelledby="navbarDropdown">
+                            <ul class="my_dropdown" :class="{ open: isClass }" @mouseleave="removeClass" aria-labelledby="navbarDropdown">
                                 <li>
-                                    <router-link :to="{ name: 'CreatePhotoJob' }" v-on:click="removeClass" class="dropdown-item">Create photo job</router-link>
+                                    <router-link :to="{ name: 'CreatePhotoJob' }"
+                                                 v-on:click="removeClass"
+                                                 class="dropdown-item">
+                                        Добавить новое фото
+                                    </router-link>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <router-link :to="{ name: 'jobList' }"
+                                                 v-on:click="removeClass"
+                                                 class="dropdown-item">
+                                        Список работ
+                                    </router-link>
                                 </li>
                                 <li>
-                                    <hr class="dropdown-divider">
+                                    <router-link :to="{ name: 'materialList' }"
+                                                 v-on:click="removeClass"
+                                                 class="dropdown-item">
+                                        Список материалов
+                                    </router-link>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="#">Something else here</a>

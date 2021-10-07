@@ -127,7 +127,7 @@
                             <img v-show="arrayShowing['takingOutDismantlingWork']" src="@/image/icons/check2-circle.svg" alt="">
                         </div>
                         <div class="col text-center">Вынос мусора</div>
-                        <div class="col-3 text-end" ref="takingOutDismantlingWork">{{ 2000 }} руб</div>
+                        <div class="col-3 text-end" ref="takingOutDismantlingWork">{{ 6000 }} руб</div>
                     </div>
 
                     <div @click="changeCost('removingCoverDismantlingWork', 'DismantlingWork')"
@@ -245,7 +245,7 @@
                             <img v-show="arrayShowing['wallPrimingLayingTiles']" src="@/image/icons/check2-circle.svg" alt="">
                         </div>
                         <div class="col text-center">Грунтовка стен</div>
-                        <div class="col-3 text-end" ref="wallPrimingLayingTiles">{{ Math.round(inSquare * 2.6 * 50) }} руб</div>
+                        <div class="col-3 text-end" ref="wallPrimingLayingTiles">{{ Math.round(5 * 2.6 * 50) }} руб</div>
                     </div>
 
                     <div @click="changeCost('layingTilesLayingTiles', 'LayingTiles')"
@@ -255,7 +255,7 @@
                             <img v-show="arrayShowing['layingTilesLayingTiles']" src="@/image/icons/check2-circle.svg" alt="">
                         </div>
                         <div class="col text-center">Укладка плитки</div>
-                        <div class="col-3 text-end" ref="layingTilesLayingTiles">{{ Math.round(((inSquare * 2.6) + inSquare) * 800) }} руб</div>
+                        <div class="col-3 text-end" ref="layingTilesLayingTiles">{{ Math.round(((5 * 2.6) + 5) * 800) }} руб</div>
                     </div>
 
                     <div @click="changeCost('drillingHolesLayingTiles', 'LayingTiles')"
@@ -265,7 +265,7 @@
                             <img v-show="arrayShowing['drillingHolesLayingTiles']" src="@/image/icons/check2-circle.svg" alt="">
                         </div>
                         <div class="col text-center">Сверление отверстий</div>
-                        <div class="col-3 text-end" ref="drillingHolesLayingTiles">{{ Math.round(inSquare * 2.6 * 300) }} руб</div>
+                        <div class="col-3 text-end" ref="drillingHolesLayingTiles">{{ Math.round(5 * 2.6 * 300) }} руб</div>
                     </div>
 
                     <div @click="changeCost('groutingLayingTiles', 'LayingTiles')"
@@ -275,7 +275,7 @@
                             <img v-show="arrayShowing['groutingLayingTiles']" src="@/image/icons/check2-circle.svg" alt="">
                         </div>
                         <div class="col text-center">Затирка швов</div>
-                        <div class="col-3 text-end" ref="groutingLayingTiles">{{ Math.round(((inSquare * 2.6) + inSquare) * 100) }} руб</div>
+                        <div class="col-3 text-end" ref="groutingLayingTiles">{{ Math.round(((5 * 2.6) + 5) * 100) }} руб</div>
                     </div>
 
                     <div @click="changeCost('roughCleaningLayingTiles', 'LayingTiles')"
@@ -285,7 +285,7 @@
                             <img v-show="arrayShowing['roughCleaningLayingTiles']" src="@/image/icons/check2-circle.svg" alt="">
                         </div>
                         <div class="col text-center">Черновая уборка</div>
-                        <div class="col-3 text-end" ref="roughCleaningLayingTiles">{{ Math.round(inSquare * 100) }} руб</div>
+                        <div class="col-3 text-end" ref="roughCleaningLayingTiles">{{ Math.round(5 * 100) }} руб</div>
                     </div>
 
                 </div>
@@ -328,8 +328,8 @@
                         <div class="col-1 d-flex rounded-pill justify-content-center align-items-center m-1">
                             <img v-show="arrayShowing['installMixerPlumbingWork']" src="@/image/icons/check2-circle.svg" alt="">
                         </div>
-                        <div class="col text-center">Установка смесителя</div>
-                        <div class="col-3 text-end" ref="installMixerPlumbingWork">{{ 500 }} руб</div>
+                        <div class="col text-center">Установка смесителей</div>
+                        <div class="col-3 text-end" ref="installMixerPlumbingWork">{{ 1500 }} руб</div>
                     </div>
 
                     <div @click="changeCost('installSinkPlumbingWork', 'PlumbingWork')"
@@ -529,13 +529,12 @@
 
 <script>
     export default {
-        name: "BathRoom",
-        // props: ['square'],
-        // emits: ['changeFinalCost'],
+        name: "ApartmentCalc",
+
         data() {
             return {
-                // inSquare: parseInt(this.square),
-                inSquare: 29,
+                //pathImg: this.$route.params.image,
+                //inSquare: this.$route.params.square,
                 arrPlastering: {},
                 arrMaterialVolume: {},
                 finalCost: 0,
@@ -600,6 +599,7 @@
             }
         },
         mounted() {
+            
             this.$nextTick(function () {
                 this.finalCost = this.sumFinal()
                 this.PlasteringWork = this.sumWork('PlasteringWork')
@@ -654,11 +654,13 @@
             },
             sumFinal() {
                 let sum = 0
-                const keys = Object.keys(this.$refs)
+                let keys = Object.keys(this.$refs)
+
+                keys = keys.filter(key => !key.endsWith('Material'))
+                keys = keys.filter(key => !key.endsWith('Volume'))
+
                 for (let i = 0; i < keys.length; i++) {
-                    if (!(keys[i].endsWith('Material'))) {
-                        sum = sum + parseInt(this.$refs[keys[i]].textContent)
-                    }
+                   sum = sum + parseInt((this.$refs[keys[i]].textContent).split(' ')[0]) 
                 }
                 return sum
             },

@@ -43,6 +43,7 @@ namespace My_Web_Sity_VueJS
             app.UseRouting();
             app.UseSpaStaticFiles();
             app.UseAuthorization();
+            
 
             app.UseEndpoints(endpoints =>
             {
